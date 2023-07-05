@@ -18,7 +18,7 @@ async function run(ip) {
             provider: "ipdata",
             security: {
                 apikey: {
-                    apikey: "6896356236c7f86d47aea71f327c03f0c00ce736e143d29373c2613f"
+                    apikey: process.env.API_DATA
                 }
             }
         }
@@ -27,6 +27,7 @@ async function run(ip) {
     // Handle the result
     try {
         const data = result.unwrap();
+        console.log('data',data);
         return data;
     } catch (error) {
         console.error(error);
