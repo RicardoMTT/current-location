@@ -1,8 +1,11 @@
 import express from "express";
 const app = express();
 import axios from 'axios';
-
-app.set("trust proxy", true);
+/*
+El encabezado "X-Forwarded-For" es un encabezado HTTP utilizado por los proxies o balanceadores 
+de carga para transmitir la dirección IP original del cliente al servidor final.
+*/
+app.set("trust proxy", true);//Para obtener el ip, se utilizará el valor del encabezado "X-Forwarded-For" para determinar la dirección IP del cliente cuando se acceda a req.ip
 
 
 app.get("/", async (req, res) => {
@@ -15,12 +18,8 @@ app.get("/", async (req, res) => {
         const { latitude, longitude } = response.data;
         const url_geocode_client = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
         const response_accuracy = await axios.get(url_geocode_client);
-        res.send({
-            ...response_accuracy.data,
-            ip
-        });
+        res.send(response_accuracy.data);
     } catch (error) {
-        console.log('error', error);
         res.status(500).send('Error al obtener la ubicación');
     }
 
