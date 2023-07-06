@@ -1,12 +1,13 @@
 import express from "express";
 const app = express();
 import axios from 'axios';
+import cors from 'cors';
 /*
 El encabezado "X-Forwarded-For" es un encabezado HTTP utilizado por los proxies o balanceadores 
 de carga para transmitir la dirección IP original del cliente al servidor final.
 */
 app.set("trust proxy", true);//Para obtener el ip, se utilizará el valor del encabezado "X-Forwarded-For" para determinar la dirección IP del cliente cuando se acceda a req.ip
-
+app.use(cors())
 
 app.get("/", async (req, res) => {
     const ip = req.ip;
